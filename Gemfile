@@ -8,6 +8,9 @@ gem "csv"
 gem "logger"
 gem "base64"
 
+# Use sassc instead of sass-embedded for better compatibility
+gem "sassc", "~> 2.4"
+
 group :jekyll_plugins do
   gem "jekyll-feed", "~> 0.12"
   gem "jekyll-sitemap"
