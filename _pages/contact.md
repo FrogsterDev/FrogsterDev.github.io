@@ -5,8 +5,6 @@ permalink: /contact/
 description: "Get in touch for collaboration, questions, or just to connect"
 ---
 
-# Contact
-
 I'm always interested in connecting with fellow cybersecurity professionals, discussing security topics, and exploring collaboration opportunities.
 
 ## Get In Touch
@@ -14,15 +12,15 @@ I'm always interested in connecting with fellow cybersecurity professionals, dis
 ### Professional Inquiries
 For professional inquiries, speaking opportunities, or collaboration requests, please reach out via:
 
-- **Email**: [your.email@example.com](mailto:your.email@example.com)
-- **LinkedIn**: [Your LinkedIn Profile](https://linkedin.com/in/your-profile)
+- **Email**: [jakub.zabski@protonmail.com](mailto:jakub.zabski@protonmail.com)
+- **LinkedIn**: [Jakub Zabski](https://linkedin.com/in/jakubzabski)
 
 ### Social Media
 Connect with me on social media for regular updates and discussions:
 
-- **GitHub**: [Your GitHub Profile](https://github.com/your-username) - Check out my security tools and projects
-- **Twitter**: [@your-twitter](https://twitter.com/your-twitter) - Follow for security news and insights
-- **LinkedIn**: [Your LinkedIn Profile](https://linkedin.com/in/your-profile) - Professional networking
+- **GitHub**: [FrogsterDev](https://github.com/FrogsterDev) - Check out my security tools and projects
+- **X**: [@FrogsterDev](https://x.com/frogsterdev) - Follow for security news and insights
+- **LinkedIn**: [Jakub Zabski](https://linkedin.com/in/jakubzabski) - Professional networking
 
 ## Areas of Interest
 
@@ -65,7 +63,7 @@ I typically respond to inquiries within:
 
 ## Location
 
-I'm based in [Your Location] and available for:
+I'm based in Switzerland and available for:
 - **Remote Collaboration** - Full-time remote work and collaboration
 - **Local Meetups** - In-person meetings and events in the area
 - **Travel** - Available for speaking engagements and conferences

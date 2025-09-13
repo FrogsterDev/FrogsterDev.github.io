@@ -5,10 +5,6 @@ permalink: /certifications/
 description: "My cybersecurity certifications and professional achievements"
 ---
 
-# Certifications
-
-This page showcases my cybersecurity certifications and professional achievements. Each certification represents a milestone in my learning journey and demonstrates my commitment to continuous professional development.
-
 ## Current Certifications
 
 <div class="certifications-grid">
@@ -41,10 +37,18 @@ This page showcases my cybersecurity certifications and professional achievement
 I'm continuously working towards new certifications to expand my knowledge and skills. Here's my current learning roadmap:
 
 ### In Progress
-- [List certifications you're currently working on]
+- CCNA
 
 ### Planned
-- [List certifications you plan to pursue]
+- CompTIA Security+
+- CISSP
+- HTB Certified Defensive Security Analyst (HTB CDSA)
+- eJPT & eCPPT or CPTS
+- OSCP
+- OSEP
+- HTB Certified Web Exploitation Expert (HTB CWEE)
+- MALDEV Academy
+- OSEE
 
 ## Why Certifications Matter
 

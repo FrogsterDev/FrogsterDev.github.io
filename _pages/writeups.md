@@ -5,9 +5,8 @@ permalink: /writeups/
 description: "Detailed technical writeups of security vulnerabilities, penetration tests, and security research"
 ---
 
-# Technical Writeups
 
-This section contains detailed technical writeups documenting my security research, penetration testing activities, and vulnerability analysis. Each writeup provides insights into the methodology, tools used, and lessons learned.
+Each writeup provides insights into the methodology, tools used, and lessons learned.
 
 ## Recent Writeups
 

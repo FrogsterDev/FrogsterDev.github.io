@@ -5,9 +5,7 @@ permalink: /learning/
 description: "My continuous learning journey in cybersecurity and related technologies"
 ---
 
-# Learning Path
-
-This section documents my continuous learning journey in cybersecurity and related technologies. It includes structured learning paths, progress tracking, and insights gained along the way.
+It includes structured learning paths, progress tracking, and insights gained along the way.
 
 ## Current Learning Modules
 
