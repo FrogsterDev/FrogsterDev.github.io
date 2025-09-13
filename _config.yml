@@ -92,5 +92,7 @@ navigation:
     url: "/writeups/"
   - title: "Learning Path"
     url: "/learning/"
+  - title: "Projects"
+    url: "/projects/"
   - title: "Contact"
     url: "/contact/"
