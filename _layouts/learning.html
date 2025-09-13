@@ -1,0 +1,74 @@
+---
+layout: default
+---
+
+<article class="learning">
+    <header class="learning-header">
+        <h1 class="learning-title">{{ page.title | escape }}</h1>
+        <div class="learning-meta">
+            <span class="learning-status status-{{ page.status | downcase }}">
+                <i class="fas fa-circle"></i>
+                {{ page.status }}
+            </span>
+            {%- if page.duration -%}
+                <span class="learning-duration">
+                    <i class="fas fa-clock"></i>
+                    {{ page.duration }}
+                </span>
+            {%- endif -%}
+            {%- if page.progress -%}
+                <span class="learning-progress">
+                    <i class="fas fa-chart-line"></i>
+                    {{ page.progress }}% Complete
+                </span>
+            {%- endif -%}
+        </div>
+        {%- if page.description -%}
+            <p class="learning-description">{{ page.description }}</p>
+        {%- endif -%}
+    </header>
+    
+    <div class="learning-content">
+        {%- if page.objectives -%}
+            <section class="learning-objectives">
+                <h2>Learning Objectives</h2>
+                <ul class="objectives-list">
+                    {%- for objective in page.objectives -%}
+                        <li>{{ objective }}</li>
+                    {%- endfor -%}
+                </ul>
+            </section>
+        {%- endif -%}
+        
+        {%- if page.resources -%}
+            <section class="learning-resources">
+                <h2>Resources</h2>
+                <div class="resources-list">
+                    {%- for resource in page.resources -%}
+                        <div class="resource-item">
+                            <h4>{{ resource.title }}</h4>
+                            <p>{{ resource.description }}</p>
+                            <a href="{{ resource.url }}" class="resource-link" target="_blank">
+                                <i class="fas fa-external-link-alt"></i>
+                                Visit Resource
+                            </a>
+                        </div>
+                    {%- endfor -%}
+                </div>
+            </section>
+        {%- endif -%}
+        
+        {%- if page.progress_notes -%}
+            <section class="learning-progress-notes">
+                <h2>Progress Notes</h2>
+                <div class="progress-notes">
+                    {{ page.progress_notes | markdownify }}
+                </div>
+            </section>
+        {%- endif -%}
+        
+        <div class="learning-body">
+            {{ content }}
+        </div>
+    </div>
+</article>

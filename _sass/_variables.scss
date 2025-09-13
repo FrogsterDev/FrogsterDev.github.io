@@ -1,0 +1,239 @@
+// CSS Variables for cybersecurity portfolio theme
+
+:root {
+  // Primary Colors - Cybersecurity Theme
+  --primary-color: #00ff88;        // Bright green (terminal/hacker green)
+  --primary-dark: #00cc6a;         // Darker green
+  --primary-light: #33ff99;        // Lighter green
+  
+  --secondary-color: #0066cc;      // Blue accent
+  --secondary-dark: #004499;       // Darker blue
+  --secondary-light: #3388dd;      // Lighter blue
+  
+  --accent-color: #ff6b35;         // Orange accent
+  --accent-dark: #cc5529;          // Darker orange
+  --accent-light: #ff8c5a;         // Lighter orange
+  
+  // Status Colors
+  --success-color: #2ed573;        // Success green
+  --warning-color: #ffa502;        // Warning orange
+  --danger-color: #ff4757;         // Danger red
+  --info-color: #3742fa;           // Info blue
+  
+  // Dark Theme Colors
+  --bg-primary: #0a0a0a;           // Main background (very dark)
+  --bg-secondary: #1a1a1a;         // Secondary background
+  --bg-tertiary: #2a2a2a;          // Tertiary background
+  --bg-quaternary: #3a3a3a;        // Quaternary background
+  
+  // Text Colors
+  --text-primary: #ffffff;         // Primary text (white)
+  --text-secondary: #b0b0b0;       // Secondary text (light gray)
+  --text-muted: #808080;           // Muted text (medium gray)
+  --text-disabled: #606060;        // Disabled text (dark gray)
+  
+  // Border Colors
+  --border-color: #333333;         // Default border
+  --border-light: #444444;         // Light border
+  --border-dark: #222222;          // Dark border
+  --border-primary: var(--primary-color); // Primary border
+  
+  // Shadow Colors
+  --shadow-light: 0 2px 4px rgba(0, 255, 136, 0.1);
+  --shadow-medium: 0 4px 8px rgba(0, 255, 136, 0.15);
+  --shadow-heavy: 0 8px 16px rgba(0, 255, 136, 0.2);
+  --shadow-glow: 0 0 20px rgba(0, 255, 136, 0.3);
+  
+  // Typography
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', monospace;
+  --font-heading: 'Inter', sans-serif;
+  
+  // Font Sizes
+  --font-size-xs: 0.75rem;         // 12px
+  --font-size-sm: 0.875rem;        // 14px
+  --font-size-base: 1rem;          // 16px
+  --font-size-lg: 1.125rem;        // 18px
+  --font-size-xl: 1.25rem;         // 20px
+  --font-size-2xl: 1.5rem;         // 24px
+  --font-size-3xl: 1.875rem;       // 30px
+  --font-size-4xl: 2.25rem;        // 36px
+  --font-size-5xl: 3rem;           // 48px
+  
+  // Font Weights
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  
+  // Line Heights
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+  
+  // Spacing Scale
+  --spacing-0: 0;
+  --spacing-1: 0.25rem;            // 4px
+  --spacing-2: 0.5rem;             // 8px
+  --spacing-3: 0.75rem;            // 12px
+  --spacing-4: 1rem;               // 16px
+  --spacing-5: 1.25rem;            // 20px
+  --spacing-6: 1.5rem;             // 24px
+  --spacing-8: 2rem;               // 32px
+  --spacing-10: 2.5rem;            // 40px
+  --spacing-12: 3rem;              // 48px
+  --spacing-16: 4rem;              // 64px
+  --spacing-20: 5rem;              // 80px
+  --spacing-24: 6rem;              // 96px
+  
+  // Border Radius
+  --radius-none: 0;
+  --radius-sm: 0.25rem;            // 4px
+  --radius-md: 0.5rem;             // 8px
+  --radius-lg: 0.75rem;            // 12px
+  --radius-xl: 1rem;               // 16px
+  --radius-2xl: 1.5rem;            // 24px
+  --radius-full: 9999px;           // Fully rounded
+  
+  // Transitions
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  --transition-bounce: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  // Z-Index Scale
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+  
+  // Breakpoints (for reference in media queries)
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+  
+  // Container Sizes
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1536px;
+  
+  // Grid System
+  --grid-columns: 12;
+  --grid-gap: var(--spacing-6);
+  --grid-gap-sm: var(--spacing-4);
+  --grid-gap-lg: var(--spacing-8);
+  
+  // Animation Durations
+  --duration-75: 75ms;
+  --duration-100: 100ms;
+  --duration-150: 150ms;
+  --duration-200: 200ms;
+  --duration-300: 300ms;
+  --duration-500: 500ms;
+  --duration-700: 700ms;
+  --duration-1000: 1000ms;
+  
+  // Animation Easing
+  --ease-linear: linear;
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  // Focus Styles
+  --focus-ring: 0 0 0 3px rgba(0, 255, 136, 0.1);
+  --focus-ring-offset: 2px;
+  
+  // Code Block Colors
+  --code-bg: var(--bg-tertiary);
+  --code-text: var(--primary-color);
+  --code-comment: var(--text-muted);
+  --code-keyword: var(--accent-color);
+  --code-string: var(--success-color);
+  --code-number: var(--warning-color);
+  --code-function: var(--secondary-color);
+  
+  // Status Indicators
+  --status-online: var(--success-color);
+  --status-offline: var(--text-muted);
+  --status-busy: var(--warning-color);
+  --status-away: var(--danger-color);
+  
+  // Difficulty Levels
+  --difficulty-beginner: var(--success-color);
+  --difficulty-intermediate: var(--warning-color);
+  --difficulty-advanced: var(--danger-color);
+  --difficulty-expert: var(--accent-color);
+  
+  // Certification Status
+  --cert-earned: var(--success-color);
+  --cert-in-progress: var(--warning-color);
+  --cert-planned: var(--text-muted);
+  --cert-expired: var(--danger-color);
+  
+  // Learning Progress
+  --progress-0: var(--text-muted);
+  --progress-25: var(--danger-color);
+  --progress-50: var(--warning-color);
+  --progress-75: var(--info-color);
+  --progress-100: var(--success-color);
+}
+
+// Light Theme Override (if implemented)
+[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --bg-quaternary: #dee2e6;
+  
+  --text-primary: #212529;
+  --text-secondary: #495057;
+  --text-muted: #6c757d;
+  --text-disabled: #adb5bd;
+  
+  --border-color: #dee2e6;
+  --border-light: #e9ecef;
+  --border-dark: #ced4da;
+  
+  --shadow-light: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.15);
+  --shadow-heavy: 0 8px 16px rgba(0, 0, 0, 0.2);
+  --shadow-glow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+// High Contrast Mode
+@media (prefers-contrast: high) {
+  :root {
+    --primary-color: #00ff00;
+    --secondary-color: #0080ff;
+    --text-primary: #ffffff;
+    --text-secondary: #ffffff;
+    --border-color: #ffffff;
+  }
+}
+
+// Reduced Motion
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: 0s;
+    --transition-normal: 0s;
+    --transition-slow: 0s;
+    --duration-75: 0s;
+    --duration-100: 0s;
+    --duration-150: 0s;
+    --duration-200: 0s;
+    --duration-300: 0s;
+    --duration-500: 0s;
+    --duration-700: 0s;
+    --duration-1000: 0s;
+  }
+}

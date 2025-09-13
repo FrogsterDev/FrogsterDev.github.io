@@ -1,0 +1,54 @@
+---
+layout: default
+---
+
+<article class="writeup">
+    <header class="writeup-header">
+        <h1 class="writeup-title">{{ page.title | escape }}</h1>
+        <div class="writeup-meta">
+            <span class="writeup-date">
+                <i class="fas fa-calendar"></i>
+                {{ page.date | date: "%B %d, %Y" }}
+            </span>
+            {%- if page.category -%}
+                <span class="writeup-category">
+                    <i class="fas fa-tag"></i>
+                    {{ page.category }}
+                </span>
+            {%- endif -%}
+            {%- if page.difficulty -%}
+                <span class="writeup-difficulty difficulty-{{ page.difficulty | downcase }}">
+                    <i class="fas fa-signal"></i>
+                    {{ page.difficulty }}
+                </span>
+            {%- endif -%}
+        </div>
+        {%- if page.description -%}
+            <p class="writeup-description">{{ page.description }}</p>
+        {%- endif -%}
+    </header>
+    
+    <div class="writeup-content">
+        {%- if page.toc -%}
+            <div class="writeup-toc">
+                <h3>Table of Contents</h3>
+                {% include toc.html html=content %}
+            </div>
+        {%- endif -%}
+        
+        <div class="writeup-body">
+            {{ content }}
+        </div>
+    </div>
+    
+    {%- if page.tags -%}
+        <footer class="writeup-footer">
+            <div class="writeup-tags">
+                <h4>Tags:</h4>
+                {%- for tag in page.tags -%}
+                    <span class="tag">{{ tag }}</span>
+                {%- endfor -%}
+            </div>
+        </footer>
+    {%- endif -%}
+</article>

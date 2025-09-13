@@ -1,0 +1,82 @@
+---
+layout: default
+---
+
+<div class="home">
+    {%- if page.title -%}
+        <h1 class="page-heading">{{ page.title }}</h1>
+    {%- endif -%}
+    
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Cybersecurity Professional</h1>
+            <p class="hero-subtitle">Building secure systems, one vulnerability at a time</p>
+            <div class="hero-buttons">
+                <a href="{{ '/about/' | relative_url }}" class="btn btn-primary">About Me</a>
+                <a href="{{ '/certifications/' | relative_url }}" class="btn btn-secondary">Certifications</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="cyber-grid">
+                <div class="grid-item"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item"></div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="recent-activity">
+        <h2>Recent Activity</h2>
+        <div class="activity-grid">
+            <div class="activity-card">
+                <div class="activity-icon">
+                    <i class="fas fa-certificate"></i>
+                </div>
+                <h3>Latest Certification</h3>
+                <p>Check out my most recent cybersecurity certification and the journey to achieve it.</p>
+                <a href="{{ '/certifications/' | relative_url }}" class="activity-link">View Certifications <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="activity-card">
+                <div class="activity-icon">
+                    <i class="fas fa-bug"></i>
+                </div>
+                <h3>Latest Writeup</h3>
+                <p>Read my detailed analysis of the latest security vulnerability or penetration testing challenge.</p>
+                <a href="{{ '/writeups/' | relative_url }}" class="activity-link">View Writeups <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="activity-card">
+                <div class="activity-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3>Learning Progress</h3>
+                <p>Track my continuous learning journey in cybersecurity and related technologies.</p>
+                <a href="{{ '/learning/' | relative_url }}" class="activity-link">View Progress <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+    
+    <section class="stats">
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-number">{{ site.certifications | size }}</div>
+                <div class="stat-label">Certifications</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">{{ site.writeups | size }}</div>
+                <div class="stat-label">Writeups</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">{{ site.learning | size }}</div>
+                <div class="stat-label">Learning Modules</div>
+            </div>
+        </div>
+    </section>
+</div>

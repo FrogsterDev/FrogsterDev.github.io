@@ -1,0 +1,72 @@
+---
+layout: default
+---
+
+<article class="certification">
+    <header class="certification-header">
+        <div class="certification-badge">
+            {%- if page.badge_image -%}
+                <img src="{{ page.badge_image | relative_url }}" alt="{{ page.title }} Badge" class="badge-image">
+            {%- else -%}
+                <div class="badge-placeholder">
+                    <i class="fas fa-certificate"></i>
+                </div>
+            {%- endif -%}
+        </div>
+        <div class="certification-info">
+            <h1 class="certification-title">{{ page.title | escape }}</h1>
+            <p class="certification-issuer">{{ page.issuer }}</p>
+            <div class="certification-meta">
+                <span class="certification-date">
+                    <i class="fas fa-calendar"></i>
+                    {{ page.date | date: "%B %Y" }}
+                </span>
+                {%- if page.credential_id -%}
+                    <span class="certification-id">
+                        <i class="fas fa-id-card"></i>
+                        ID: {{ page.credential_id }}
+                    </span>
+                {%- endif -%}
+                {%- if page.verification_url -%}
+                    <a href="{{ page.verification_url }}" class="certification-verify" target="_blank">
+                        <i class="fas fa-external-link-alt"></i>
+                        Verify
+                    </a>
+                {%- endif -%}
+            </div>
+        </div>
+    </header>
+    
+    <div class="certification-content">
+        {%- if page.description -%}
+            <section class="certification-description">
+                <h2>Description</h2>
+                <p>{{ page.description }}</p>
+            </section>
+        {%- endif -%}
+        
+        {%- if page.skills -%}
+            <section class="certification-skills">
+                <h2>Skills Gained</h2>
+                <div class="skills-list">
+                    {%- for skill in page.skills -%}
+                        <span class="skill-tag">{{ skill }}</span>
+                    {%- endfor -%}
+                </div>
+            </section>
+        {%- endif -%}
+        
+        {%- if page.learning_journey -%}
+            <section class="certification-journey">
+                <h2>Learning Journey</h2>
+                <div class="journey-content">
+                    {{ page.learning_journey | markdownify }}
+                </div>
+            </section>
+        {%- endif -%}
+        
+        <div class="certification-body">
+            {{ content }}
+        </div>
+    </div>
+</article>

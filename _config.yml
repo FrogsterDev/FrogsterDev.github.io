@@ -1,0 +1,93 @@
+# Site settings
+title: "Cybersecurity Portfolio"
+description: "Professional cybersecurity portfolio showcasing certifications, learning progress, and technical writeups"
+author: "Jakub Zabski"
+email: "jakub.zabski@protonmail.com"
+url: "https://frogsterdev.github.io"
+baseurl: ""
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: /:categories/:year/:month/:day/:title/
+timezone: UTC
+
+# Collections
+collections:
+  certifications:
+    output: true
+    permalink: /:collection/:name/
+  writeups:
+    output: true
+    permalink: /:collection/:year/:month/:day/:title/
+  learning:
+    output: true
+    permalink: /:collection/:name/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+  - scope:
+      path: ""
+      type: "certifications"
+    values:
+      layout: "certification"
+  - scope:
+      path: ""
+      type: "writeups"
+    values:
+      layout: "writeup"
+  - scope:
+      path: ""
+      type: "learning"
+    values:
+      layout: "learning"
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - README.md
+  - LICENSE
+  - .gitignore
+
+# Include
+include:
+  - _pages
+
+# Social links
+social:
+  github: frogsterdev
+  linkedin: jakubzabski
+  twitter: frogsterdev
+  email: jakub.zabski@protonmail.com
+
+# Navigation
+navigation:
+  - title: "Home"
+    url: "/"
+  - title: "About"
+    url: "/about/"
+  - title: "Certifications"
+    url: "/certifications/"
+  - title: "Writeups"
+    url: "/writeups/"
+  - title: "Learning Path"
+    url: "/learning/"
+  - title: "Contact"
+    url: "/contact/"
