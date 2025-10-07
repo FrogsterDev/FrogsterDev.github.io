@@ -2,7 +2,7 @@
 layout: learning
 title: "Junior Cybersecurity Analyst HTB"
 status: "In Progress"
-progress: 19.37
+progress: 26.03
 duration: "17 days"
 description: "Study notes and writeups for the Junior Cybersecurity Analyst path from HTB"
 resources:
@@ -19,16 +19,24 @@ progress_notes: |
   **Network Foundations** ✔ [*Complete*](https://academy.hackthebox.com/achievement/786250/289) 
 
   ##### *Day 3:*
-  **Introduction to Networking** [*In Progres*]()
+  **Introduction to Networking** ✔ [*Complete*](https://academy.hackthebox.com/achievement/786250/34)
+
+  ##### *Day 4:*
+  **Linux Fundamentals** [*In Progress*]()
 ---
 
 # Notes
+
+### Networking
 
 - [Networking Key terminology](#networking-key-terminology)
 - [Common TCP protocols](#common-tcp-protocols---ports)
 - [Common UDP protocols](#common-udp-protocols---ports)
 - [Authentication protocols](#authentication-protocols)
 
+### Linux
+
+- [File System Hierarchy](#linux-file-system-hierarchy)
 
 ## Networking Key terminology
 
@@ -183,3 +191,24 @@ progress_notes: |
 |`HTTPS`|This is a secure version of the HTTP protocol used for communication on the internet. HTTPS uses SSL/TLS to encrypt communication and provide authentication, ensuring that third parties cannot intercept and read the transmitted data. It is widely used for secure communication over the internet, particularly for web browsing.|
 |`LEAP`|LEAP is a wireless authentication protocol developed by Cisco. It uses EAP to provide mutual authentication between a wireless client and a server and uses the RC4 encryption algorithm to encrypt communication between the two. Unfortunately, LEAP is vulnerable to dictionary attacks and other security vulnerabilities and has been largely replaced by more secure protocols such as EAP-TLS and PEAP.|
 |`PEAP`|PEAP on the other hand is a secure tunneling protocol used for wireless and wired networks. It is based on EAP and uses TLS to encrypt communication between a client and a server. PEAP uses a server-side certificate to authenticate the server and can also be used to authenticate the client using various methods, such as passwords, certificates, or biometric data. PEAP is widely used in enterprise networks for secure authentication.|
+
+## Linux File System Hierarchy
+
+
+| **Path** | **Description**                                                                                                                                                                                                                                                                                                                    |
+| -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/`      | The top-level directory is the root filesystem and contains all of the files required to boot the operating system before other filesystems are mounted, as well as the files required to boot the other filesystems. After boot, all of the other filesystems are mounted at standard mount points as subdirectories of the root. |
+| `/bin`   | Contains essential command binaries.                                                                                                                                                                                                                                                                                               |
+| `/boot`  | Consists of the static bootloader, kernel executable, and files required to boot the Linux OS.                                                                                                                                                                                                                                     |
+| `/dev`   | Contains device files to facilitate access to every hardware device attached to the system.                                                                                                                                                                                                                                        |
+| `/etc`   | Local system configuration files. Configuration files for installed applications may be saved here as well.                                                                                                                                                                                                                        |
+| `/home`  | Each user on the system has a subdirectory here for storage.                                                                                                                                                                                                                                                                       |
+| `/lib`   | Shared library files that are required for system boot.                                                                                                                                                                                                                                                                            |
+| `/media` | External removable media devices such as USB drives are mounted here.                                                                                                                                                                                                                                                              |
+| `/mnt`   | Temporary mount point for regular filesystems.                                                                                                                                                                                                                                                                                     |
+| `/opt`   | Optional files such as third-party tools can be saved here.                                                                                                                                                                                                                                                                        |
+| `/root`  | The home directory for the root user.                                                                                                                                                                                                                                                                                              |
+| `/sbin`  | This directory contains executables used for system administration (binary system files).                                                                                                                                                                                                                                          |
+| `/tmp`   | The operating system and many programs use this directory to store temporary files. This directory is generally cleared upon system boot and may be deleted at other times without any warning.                                                                                                                                    |
+| `/usr`   | Contains executables, libraries, man files, etc.                                                                                                                                                                                                                                                                                   |
+| `/var`   | This directory contains variable data files such as log files, email in-boxes, web application related files, cron files, and more.                                                                                                                                                                                                |
