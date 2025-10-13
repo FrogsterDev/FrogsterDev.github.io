@@ -433,6 +433,9 @@ We can define in a `crontab` scheduled script executions.
 |Months (1-12)|This specifies in which month the task should be executed.|
 |Days of the week (0-7)|This specifies on which day of the week the task should be executed.|
 
+## Mounting
+
+If you want a partition to be mounted on system boot you can define it in `/etc/fstab`.
 
 ## Exercises
 
