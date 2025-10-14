@@ -437,6 +437,153 @@ We can define in a `crontab` scheduled script executions.
 
 If you want a partition to be mounted on system boot you can define it in `/etc/fstab`.
 
+## Dockerization - Docker
+
+### How to install docker-engine
+
+```bash
+#!/bin/bash
+
+# Preparation
+sudo apt update -y
+sudo apt install ca-certificates curl gnupg lsb-release -y
+sudo mkdir -m 0755 -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+# Install Docker Engine
+sudo apt update -y
+sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+
+# Add user htb-student to the Docker group
+sudo usermod -aG docker htb-student
+echo '[!] You need to log out and log back in for the group changes to take effect.'
+
+# Test Docker installation
+docker run hello-world
+```
+
+### Dockerfile
+
+```bash
+# Use the latest Ubuntu 22.04 LTS as the base image
+FROM ubuntu:22.04
+
+# Update the package repository and install the required packages
+RUN apt-get update && \
+    apt-get install -y \
+        apache2 \
+        openssh-server \
+        && \
+    rm -rf /var/lib/apt/lists/*
+
+# Create a new user called "docker-user"
+RUN useradd -m docker-user && \
+    echo "docker-user:password" | chpasswd
+
+# Give the docker-user user full access to the Apache and SSH services
+RUN chown -R docker-user:docker-user /var/www/html && \
+    chown -R docker-user:docker-user /var/run/apache2 && \
+    chown -R docker-user:docker-user /var/log/apache2 && \
+    chown -R docker-user:docker-user /var/lock/apache2 && \
+    usermod -aG sudo docker-user && \
+    echo "docker-user ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+# Expose the required ports
+EXPOSE 22 80
+
+# Start the SSH and Apache services
+CMD service ssh start && /usr/sbin/apache2ctl -D FOREGROUND
+```
+
+### Docker build
+
+```bash
+Zabsooon@htb[/htb]$ docker build -t FS_docker .
+```
+
+### Docker run
+
+```bash
+Zabsooon@htb[/htb]$ docker run -p <host port>:<docker port> -d <docker container name>
+```
+
+```bash
+Zabsooon@htb[/htb]$ docker run -p 8022:22 -p 8080:80 -d FS_docker
+```
+
+### Docker management
+
+|**Command**|**Description**|
+|---|---|
+|`docker ps`|List all running containers|
+|`docker stop`|Stop a running container.|
+|`docker start`|Start a stopped container.|
+|`docker restart`|Restart a running container.|
+|`docker rm`|Remove a container.|
+|`docker rmi`|Remove a Docker image.|
+|`docker logs`|View the logs of a container.|
+
+## LXC - Linux Containers
+
+### Installation
+
+```bash
+Zabsooon@htb[/htb]$ sudo apt-get install lxc lxc-utils -y
+```
+
+### Creating LXC Container
+
+```bash
+Zabsooon@htb[/htb]$ sudo lxc-create -n linuxcontainer -t ubuntu
+```
+
+### LXC Containers Management
+
+|Command|Description|
+|---|---|
+|`lxc-ls`|List all existing containers|
+|`lxc-stop -n <container>`|Stop a running container.|
+|`lxc-start -n <container>`|Start a stopped container.|
+|`lxc-restart -n <container>`|Restart a running container.|
+|`lxc-config -n <container name> -s storage`|Manage container storage|
+|`lxc-config -n <container name> -s network`|Manage container network settings|
+|`lxc-config -n <container name> -s security`|Manage container security settings|
+|`lxc-attach -n <container>`|Connect to a container.|
+|`lxc-attach -n <container> -f /path/to/share`|Connect to a container and share a specific directory or file.|
+
+### Securing LXC
+
+```bash
+Zabsooon@htb[/htb]$ sudo vim /usr/share/lxc/config/linuxcontainer.conf
+```
+
+```conf
+lxc.cgroup.cpu.shares = 512
+lxc.cgroup.memory.limit_in_bytes = 512M
+```
+
+To apply the changes we need to restart the service:
+
+```bash
+Zabsooon@htb[/htb]$ sudo systemctl restart lxc.service
+```
+
+### Exercises for later for LXC
+
+
+|---|---|
+|1|Install LXC on your machine and create your first container.|
+|2|Configure the network settings for your LXC container.|
+|3|Create a custom LXC image and use it to launch a new container.|
+|4|Configure resource limits for your LXC containers (CPU, memory, disk space).|
+|5|Explore the `lxc-*` commands for managing containers.|
+|6|Use LXC to create a container running a specific version of a web server (e.g., Apache, Nginx).|
+|7|Configure SSH access to your LXC containers and connect to them remotely.|
+|8|Create a container with persistence, so changes made to the container are saved and can be reused.|
+|9|Use LXC to test software in a controlled environment, such as a vulnerable web application or malware.|
+
+
 ## Exercises
 
 **Here I put all of the exercises and what commands I executed to solve them**.
