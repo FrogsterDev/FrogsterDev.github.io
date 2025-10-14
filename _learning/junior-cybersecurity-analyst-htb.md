@@ -571,7 +571,7 @@ Zabsooon@htb[/htb]$ sudo systemctl restart lxc.service
 
 ### Exercises for later for LXC
 
-
+| Task | Description |
 |---|---|
 |1|Install LXC on your machine and create your first container.|
 |2|Configure the network settings for your LXC container.|
@@ -582,6 +582,82 @@ Zabsooon@htb[/htb]$ sudo systemctl restart lxc.service
 |7|Configure SSH access to your LXC containers and connect to them remotely.|
 |8|Create a container with persistence, so changes made to the container are saved and can be reused.|
 |9|Use LXC to test software in a controlled environment, such as a vulnerable web application or malware.|
+
+## Networking
+
+### Activate Network Interface
+
+```bash
+Zabsooon@htb[/htb]$ sudo ifconfig eth0 up     # OR
+Zabsooon@htb[/htb]$ sudo ip link set eth0 up
+```
+
+### Assign IP Address to an Interface
+
+```bash
+Zabsooon@htb[/htb]$ sudo ifconfig eth0 192.168.1.2
+```
+
+### Assign a netmask to an Interface
+
+```bash
+Zabsooon@htb[/htb]$ sudo ifconfig eth0 netmask 255.255.255.0
+```
+
+### Assign the Route to an Interface
+
+```shell
+Zabsooon@htb[/htb]$ sudo route add default gw 192.168.1.1 eth0
+```
+
+### DNS Settings
+
+**/etc/resolv.conf**
+```bash
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+```
+
+**/etc/network/interfaces**
+```bash
+auto eth0
+iface eth0 inet static
+  address 192.168.1.2
+  netmask 255.255.255.0
+  gateway 192.168.1.1
+  dns-nameservers 8.8.8.8 8.8.4.4
+```
+
+**Restart networking service**
+
+```bash
+Zabsooon@htb[/htb]$ sudo systemctl restart networking
+```
+
+### System hardening
+
+**SELinux**
+| Task | Description |
+| --- | ------------------------------------------------------------------------------------------------------------ |
+| 1.  | Install SELinux on your VM.                                                                                  |
+| 2.  | Configure SELinux to prevent a user from accessing a specific file.                                          |
+| 3.  | Configure SELinux to allow a single user to access a specific network service but deny access to all others. |
+| 4.  | Configure SELinux to deny access to a specific user or group for a specific network service.                 |
+
+**AppArmor**
+| Task | Description |
+| --- | ------------------------------------------------------------------------------------------------------------ |
+| 5.  | Configure AppArmor to prevent a user from accessing a specific file.                                          |
+| 6.  | Configure AppArmor to allow a single user to access a specific network service but deny access to all others. |
+| 7.  | Configure AppArmor to deny access to a specific user or group for a specific network service.                 |
+
+**TCP Wrappers**
+
+| Task | Description|
+| --- | -------------------------------------------------------------------------------------------------- |
+| 8.  | Configure TCP wrappers to allow access to a specific network service from a specific IP address.   |
+| 9.  | Configure TCP wrappers to deny access to a specific network service from a specific IP address.    |
+| 10. | Configure TCP wrappers to allow access to a specific network service from a range of IP addresses. |
 
 
 ## Exercises
