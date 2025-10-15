@@ -42,6 +42,38 @@ progress_notes: |
 - [File permissions management](#file-permissions-menagement)
 - [Exercises](#exercises)
 - [Task Scheduling](#task-scheduling)
+    - [Systemd](#systemd)
+    - [Cron](#cron)
+- [Mounting](#mounting)
+- [Dockerization - Docker](#dockerization---docker)
+    - [How to install docker-engine](#how-to-install-docker-engine)
+    - [Dockerfile](#dockerfile)
+    - [Docker build](#docker-build)
+    - [Docker run](#docker-run)
+    - [Docker management](#docker-management)
+- [LXC - Linux containers](#lxc---linux-containers)
+    - [Installation](#installation-lxc)
+    - [Creating LCX Container](#creating-lxc-container)
+    - [Containers Management](#lxc-containers-management)
+    - [Securing LXC](#securing-lxc)
+    - [Exercises for later](#exercises-for-later-for-lxc)
+- [Linux Networking](#linux-networking)
+    - [Activate network interface](#activate-network-interface)
+    - [Assign IP address to an interface](#assign-ip-address-to-an-interface)
+    - [Assign a netmask to an interface](#assign-a-netmask-to-an-interface)
+    - [Assign the route to an interface](#assign-the-route-to-an-interface)
+    - [DNS Settings](#dns-settings)
+    - [System hardening](#system-hardening)
+- [Remote desktop](#remote-desktop)
+    - [X11Forwarding](#x11forwarding)
+    - [TigerVNC](#tigervnc)
+        - [Installation](#installation-tigervnc)
+        - [Configuration](#configuration-tigervnc)
+        - [Start VNC Server](#start-vncserver)
+        - [List sessions](#list-sessions-vncserver)
+        - [Setting up an ssh tunel](#setting-up-an-ssh-tunel-vncserver)
+        - [Connect to the server](#connect-to-the-server-vncserver)
+
 
 ## Networking Key terminology
 
@@ -526,7 +558,7 @@ Zabsooon@htb[/htb]$ docker run -p 8022:22 -p 8080:80 -d FS_docker
 
 ## LXC - Linux Containers
 
-### Installation
+### Installation {#lxc}
 
 ```bash
 Zabsooon@htb[/htb]$ sudo apt-get install lxc lxc-utils -y
@@ -583,7 +615,7 @@ Zabsooon@htb[/htb]$ sudo systemctl restart lxc.service
 |8|Create a container with persistence, so changes made to the container are saved and can be reused.|
 |9|Use LXC to test software in a controlled environment, such as a vulnerable web application or malware.|
 
-## Networking
+## Linux Networking
 
 ### Activate Network Interface
 
@@ -659,6 +691,122 @@ Zabsooon@htb[/htb]$ sudo systemctl restart networking
 | 9.  | Configure TCP wrappers to deny access to a specific network service from a specific IP address.    |
 | 10. | Configure TCP wrappers to allow access to a specific network service from a range of IP addresses. |
 
+## Remote Desktop
+
+### X11Forwarding
+
+We check if we have **X11Forwarding** *enabled*.
+
+```bash
+Zabsooon@htb[/htb]$ cat /etc/ssh/sshd_config | grep X11Forwarding
+
+X11Forwarding yes
+```
+
+With this we can start an application remotely.
+
+```bash
+Zabsooon@htb[/htb]$ ssh -X htb-student@10.129.23.11 /usr/bin/firefox
+
+htb-student@10.129.14.130's password: ********
+<SKIP>
+```
+
+### TigerVNC
+
+#### Installation {#tigervnc}
+
+```bash
+htb-student@ubuntu:~$ sudo apt install xfce4 xfce4-goodies tigervnc-standalone-server -y
+htb-student@ubuntu:~$ vncpasswd 
+
+Password: ******
+Verify: ******
+Would you like to enter a view-only password (y/n)? n
+```
+
+#### Configuration {#tigervnc}
+
+```bash
+htb-student@ubuntu:~$ touch ~/.vnc/xstartup ~/.vnc/config
+htb-student@ubuntu:~$ cat <<EOT >> ~/.vnc/xstartup
+
+#!/bin/bash
+unset SESSION_MANAGER
+unset DBUS_SESSION_BUS_ADDRESS
+/usr/bin/startxfce4
+[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup
+[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources
+x-window-manager &
+EOT
+```
+
+```bash
+htb-student@ubuntu:~$ cat <<EOT >> ~/.vnc/config
+
+geometry=1920x1080
+dpi=96
+EOT
+```
+
+```bash
+htb-student@ubuntu:~$ chmod +x ~/.vnc/xstartup
+```
+
+#### Start VNCServer
+
+```bash
+htb-student@ubuntu:~$ vncserver
+
+New 'linux:1 (htb-student)' desktop at :1 on machine linux
+
+Starting applications specified in /home/htb-student/.vnc/xstartup
+Log file is /home/htb-student/.vnc/linux:1.log
+
+Use xtigervncviewer -SecurityTypes VncAuth -passwd /home/htb-student/.vnc/passwd :1 to connect to the VNC server.
+```
+
+#### List sessions {#vncserver}
+
+```bash
+htb-student@ubuntu:~$ vncserver -list
+
+TigerVNC server sessions:
+
+X DISPLAY #     RFB PORT #      PROCESS ID
+:1              5901            79746
+```
+
+#### Setting up an SSH Tunel {#vncserver}
+
+```bash
+Zabsooon@htb[/htb]$ ssh -L 5901:127.0.0.1:5901 -N -f -l htb-student 10.129.14.130
+
+htb-student@10.129.14.130's password: *******
+```
+
+#### Connect to the server {#vncserver}
+
+```bash
+Zabsooon@htb[/htb]$ xtightvncviewer localhost:5901
+
+Connected to RFB server, using protocol version 3.8
+Performing standard VNC authentication
+
+Password: ******
+
+Authentication successful
+Desktop name "linux:1 (htb-student)"
+VNC server default format:
+  32 bits per pixel.
+  Least significant byte first in each pixel.
+  True colour: max red 255 green 255 blue 255, shift red 16 green 8 blue 0
+Using default colormap which is TrueColor.  Pixel format:
+  32 bits per pixel.
+  Least significant byte first in each pixel.
+  True colour: max red 255 green 255 blue 255, shift red 16 green 8 blue 0
+Same machine: preferring raw encoding
+```
 
 ## Exercises
 
