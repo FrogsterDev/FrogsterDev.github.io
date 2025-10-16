@@ -2,7 +2,7 @@
 layout: learning
 title: "Junior Cybersecurity Analyst HTB"
 status: "In Progress"
-progress: 26.03
+progress: 35.6
 duration: "17 days"
 description: "Study notes and writeups for the Junior Cybersecurity Analyst path from HTB"
 resources:
@@ -22,7 +22,7 @@ progress_notes: |
   **Introduction to Networking** ✔ [*Complete*](https://academy.hackthebox.com/achievement/786250/34)
 
   ##### *Day 4:*
-  **Linux Fundamentals** [*In Progress*]()
+  **Linux Fundamentals** ✔ [*Complete*](https://academy.hackthebox.com/achievement/786250/18)
 ---
 
 # Notes
@@ -73,6 +73,10 @@ progress_notes: |
         - [List sessions](#list-sessions-vncserver)
         - [Setting up an ssh tunel](#setting-up-an-ssh-tunel-vncserver)
         - [Connect to the server](#connect-to-the-server-vncserver)
+- [Linux Hardening](#linux-hardening)
+    - [Block Traffic](#block-traffic)
+    - [Firewall Setup](#firewall-setup)
+- [Shortcuts](#shortcuts)
 
 
 ## Networking Key terminology
@@ -666,6 +670,7 @@ iface eth0 inet static
 Zabsooon@htb[/htb]$ sudo systemctl restart networking
 ```
 
+
 ### System hardening
 
 **SELinux**
@@ -808,13 +813,218 @@ Using default colormap which is TrueColor.  Pixel format:
 Same machine: preferring raw encoding
 ```
 
+## Linux Hardening
+
+### Block traffic
+
+`/etc/hosts.allow`
+```bash
+Zabsooon@htb[/htb]$ cat /etc/hosts.allow
+
+# Allow access to SSH from the local network
+sshd : 10.129.14.0/24
+
+# Allow access to FTP from a specific host
+ftpd : 10.129.14.10
+
+# Allow access to Telnet from any host in the inlanefreight.local domain
+telnetd : .inlanefreight.local
+```
+
+`/etc/hosts.allow`
+```bash
+Zabsooon@htb[/htb]$ cat /etc/hosts.deny
+
+# Deny access to all services from any host in the inlanefreight.com domain
+ALL : .inlanefreight.com
+
+# Deny access to SSH from a specific host
+sshd : 10.129.22.22
+
+# Deny access to FTP from hosts with IP addresses in the range of 10.129.22.0 to 10.129.22.255
+ftpd : 10.129.22.0/24
+```
+
+### Firewall Setup
+
+#### IpTables
+
+|**Component**|**Description**|
+|---|---|
+|`Tables`|Tables are used to organize and categorize firewall rules.|
+|`Chains`|Chains are used to group a set of firewall rules applied to a specific type of network traffic.|
+|`Rules`|Rules define the criteria for filtering network traffic and the actions to take for packets that match the criteria.|
+|`Matches`|Matches are used to match specific criteria for filtering network traffic, such as source or destination IP addresses, ports, protocols, and more.|
+|`Targets`|Targets specify the action for packets that match a specific rule. For example, targets can be used to accept, drop, or reject packets or modify the packets in another way.|
+
+---
+
+#### Tables
+
+|**Table Name**|**Description**|**Built-in Chains**|
+|---|---|---|
+|`filter`|Used to filter network traffic based on IP addresses, ports, and protocols.|INPUT, OUTPUT, FORWARD|
+|`nat`|Used to modify the source or destination IP addresses of network packets.|PREROUTING, POSTROUTING|
+|`mangle`|Used to modify the header fields of network packets.|PREROUTING, OUTPUT, INPUT, FORWARD, POSTROUTING|
+
+
+---
+
+#### Rules and Targets
+
+|**Target Name**|**Description**|
+|---|---|
+|`ACCEPT`|Allows the packet to pass through the firewall and continue to its destination|
+|`DROP`|Drops the packet, effectively blocking it from passing through the firewall|
+|`REJECT`|Drops the packet and sends an error message back to the source address, notifying them that the packet was blocked|
+|`LOG`|Logs the packet information to the system log|
+|`SNAT`|Modifies the source IP address of the packet, typically used for Network Address Translation (NAT) to translate private IP addresses to public IP addresses|
+|`DNAT`|Modifies the destination IP address of the packet, typically used for NAT to forward traffic from one IP address to another|
+|`MASQUERADE`|Similar to SNAT but used when the source IP address is not fixed, such as in a dynamic IP address scenario|
+|`REDIRECT`|Redirects packets to another port or IP address|
+|`MARK`|Adds or modifies the Netfilter mark value of the packet, which can be used for advanced routing or other purposes|
+
+---
+
+#### Matches
+
+|**Match Name**|**Description**|
+|---|---|
+|`-p` or `--protocol`|Specifies the protocol to match (e.g. tcp, udp, icmp)|
+|`--dport`|Specifies the destination port to match|
+|`--sport`|Specifies the source port to match|
+|`-s` or `--source`|Specifies the source IP address to match|
+|`-d` or `--destination`|Specifies the destination IP address to match|
+|`-m state`|Matches the state of a connection (e.g. NEW, ESTABLISHED, RELATED)|
+|`-m multiport`|Matches multiple ports or port ranges|
+|`-m tcp`|Matches TCP packets and includes additional TCP-specific options|
+|`-m udp`|Matches UDP packets and includes additional UDP-specific options|
+|`-m string`|Matches packets that contain a specific string|
+|`-m limit`|Matches packets at a specified rate limit|
+|`-m conntrack`|Matches packets based on their connection tracking information|
+|`-m mark`|Matches packets based on their Netfilter mark value|
+|`-m mac`|Matches packets based on their MAC address|
+|`-m iprange`|Matches packets based on a range of IP addresses|
+
+---
+
+*Exercises for IpTables*
+
+1.	Launch a web server on TCP/8080 port on your target and use iptables to block incoming traffic on that port.
+2.	Change iptables rules to allow incoming traffic on the TCP/8080 port.
+3.	Block traffic from a specific IP address.
+4.	Allow traffic from a specific IP address.
+5.	Block traffic based on protocol.
+6.	Allow traffic based on protocol.
+7.	Create a new chain.
+8.	Forward traffic to a specific chain.
+9.	Delete a specific rule.
+10.	List all existing rules.
+
+---
+
+### System logs
+
+Logs types:
+- Kernel Logs (`/var/log/kern.log`)
+- System Logs (`/var/log/syslog`)
+- Authentication Logs (`/var/log/auth.log`)
+- Application Logs (`/var/log/*app*/error.log`)
+- Security Logs
+
+
+|**Service**|**Description**|
+|---|---|
+|`Apache`|Access logs are stored in the /var/log/apache2/access.log file (or similar, depending on the distribution).|
+|`Nginx`|Access logs are stored in the /var/log/nginx/access.log file (or similar).|
+|`OpenSSH`|Access logs are stored in the /var/log/auth.log file on Ubuntu and in /var/log/secure on CentOS/RHEL.|
+|`MySQL`|Access logs are stored in the /var/log/mysql/mysql.log file.|
+|`PostgreSQL`|Access logs are stored in the /var/log/postgresql/postgresql-version-main.log file.|
+|`Systemd`|Access logs are stored in the /var/log/journal/ directory.|
+
+### Shortcuts
+
+**Cursor Movement**
+
+[CTRL] + A - Move the cursor to the beginning of the current line.
+
+[CTRL] + E - Move the cursor to the end of the current line.
+
+[CTRL] + [←] / [→] - Jump at the beginning of the current/previous word.
+
+[ALT] + B / F - Jump backward/forward one word.
+
+---
+
+**Erase The Current Line**
+
+[CTRL] + U - Erase everything from the current position of the cursor to the beginning of the line.
+
+[Ctrl] + K - Erase everything from the current position of the cursor to the end of the line.
+
+[Ctrl] + W - Erase the word preceding the cursor position.
+
+---
+
+**Paste Erased Contents**
+
+[Ctrl] + Y - Pastes the erased text or word.
+
+---
+
+**Ends Task**
+
+[CTRL] + C - Ends the current task/process by sending the SIGINT signal. For example, this can be a scan that is running by a tool. If we are watching the scan, we can stop it / kill this process by using this shortcut. While not configured and developed by the tool we are using. The process will be killed without asking us for confirmation.
+
+---
+
+**End-of-File (EOF)**
+
+[CTRL] + D - Close STDIN pipe that is also known as End-of-File (EOF) or End-of-Transmission.
+
+---
+
+**Clear Terminal**
+
+[CTRL] + L - Clears the terminal. An alternative to this shortcut is the clear command you can type to clear our terminal.
+
+---
+
+**Background a Process**
+
+[CTRL] + Z - Suspend the current process by sending the SIGTSTP signal.
+
+---
+
+**Search Through Command History**
+
+[CTRL] + R - Search through command history for commands we typed previously that match our search patterns.
+
+[↑] / [↓] - Go to the previous/next command in the command history.
+
+---
+
+**Switch Between Applications**
+
+[ALT] + [TAB] - Switch between opened applications.
+
+---
+
+**Zoom**
+
+[CTRL] + [+] - Zoom in.
+
+[CTRL] + [-] - Zoom out.
+
+---
+
 ## Exercises
 
 **Here I put all of the exercises and what commands I executed to solve them**.
 
 ---
 
-What is the name of the config file that has been created after 2020-03-03 and is smaller than 28k but larger than 25k? 
+*What is the name of the config file that has been created after 2020-03-03 and is smaller than 28k but larger than 25k?*
 
 ```bash
 find / -type f -name *.conf -size +25k -size -28k -exec ls -al {} \; 2>/dev/null
@@ -834,7 +1044,7 @@ You can check man page but here is what this describes:
 
 ---
 
-Use cURL from your Pwnbox (not the target machine) to obtain the source code of the "https://www.inlanefreight.com" website and filter all unique paths (https://www.inlanefreight.com/directory" or "/another/directory") of that domain. Submit the number of these paths as the answer. 
+*Use cURL from your Pwnbox (not the target machine) to obtain the source code of the "https://www.inlanefreight.com" website and filter all unique paths (https://www.inlanefreight.com/directory" or "/another/directory") of that domain. Submit the number of these paths as the answer.*
 
 ```bash
 curl "https://www.inlanefreight.com/" | grep -Po "https://www.inlanefreight.com/[^\"' >]*" | sort -u | wc -l
