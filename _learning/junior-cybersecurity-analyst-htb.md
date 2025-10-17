@@ -23,6 +23,9 @@ progress_notes: |
 
   ##### *Day 4:*
   **Linux Fundamentals** ✔ [*Complete*](https://academy.hackthebox.com/achievement/786250/18)
+  
+  ##### *Day 5:*
+  **Introduction to Bash Scripting** ✔ [*Complete*](https://academy.hackthebox.com/achievement/786250/21)
 ---
 
 # Notes
@@ -77,6 +80,10 @@ progress_notes: |
     - [Block Traffic](#block-traffic)
     - [Firewall Setup](#firewall-setup)
 - [Shortcuts](#shortcuts)
+
+### Bash scripting
+
+- [File Operators](#file-operators-bash)
 
 
 ## Networking Key terminology
@@ -1017,6 +1024,37 @@ Logs types:
 [CTRL] + [-] - Zoom out.
 
 ---
+
+## File Operators {#bash}
+
+|**Operator**|**Description**|
+|---|---|
+|`-e`|if the file exist|
+|`-f`|tests if it is a file|
+|`-d`|tests if it is a directory|
+|`-L`|tests if it is if a symbolic link|
+|`-N`|checks if the file was modified after it was last read|
+|`-O`|if the current user owns the file|
+|`-G`|if the file’s group id matches the current user’s|
+|`-s`|tests if the file has a size greater than 0|
+|`-r`|tests if the file has read permission|
+|`-w`|tests if the file has write permission|
+|`-x`|tests if the file has execute permission|
+
+## Return Codes {#bash}
+
+
+|**Return Code**|**Description**|
+|---|---|
+|`1`|General errors|
+|`2`|Misuse of shell builtins|
+|`126`|Command invoked cannot execute|
+|`127`|Command not found|
+|`128`|Invalid argument to exit|
+|`128+n`|Fatal error signal "`n`"|
+|`130`|Script terminated by Control-C|
+|`255\*`|Exit status out of range|
+
 
 ## Exercises
 
