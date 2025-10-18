@@ -85,6 +85,12 @@ progress_notes: |
 
 - [File Operators](#file-operators-bash)
 
+### Windows
+
+- [CheatSheet](#windows-cheatsheet)
+- [Creating a Network Share](#creating-a-network-share-windows)
+- [Connecting to Network Share](#connecting-to-network-share-windows)
+- [Windows Execution Policy](#windows-execution-policy)
 
 ## Networking Key terminology
 
@@ -1055,6 +1061,80 @@ Logs types:
 |`130`|Script terminated by Control-C|
 |`255\*`|Exit status out of range|
 
+## Windows Cheatsheet
+
+|**Command**|**Description**|
+|---|---|
+|`xfreerdp /v:<target IP address> /u:htb-student /p:<password>`|RDP to lab target|
+|`Get-WmiObject -Class win32_OperatingSystem`|Get information about the operating system|
+|`dir c:\ /a`|View all files and directories in the c:\ root directory|
+|`tree <directory>`|Graphically displaying the directory structure of a path|
+|`tree c:\ /f \| more`|Walk through results of the `tree` command page by page|
+|`icacls <directory>`|View the permissions set on a directory|
+|`icacls c:\users /grant joe:f`|Grant a user full permissions to a directory|
+|`icacls c:\users /remove joe`|Remove a users' permissions on a directory|
+|`Get-Service`|`PowerShell` cmdlet to view running services|
+|`help <command>`|Display the help menu for a specific command|
+|`get-alias`|List `PowerShell` aliases|
+|`New-Alias -Name "Show-Files" Get-ChildItem`|Create a new `PowerShell` alias|
+|`Get-Module \| select Name,ExportedCommands \| fl`|View imported `PowerShell` modules and their associated commands|
+|`Get-ExecutionPolicy -List`|View the `PowerShell` execution policy|
+|`Set-ExecutionPolicy Bypass -Scope Process`|Set the `PowerShell` execution policy to bypass for the current session|
+|`wmic os list brief`|Get information about the operating system with `wmic`|
+|`Invoke-WmiMethod`|Call methods of `WMI` objects|
+|`whoami /user`|View the current users' SID|
+|`reg query <key>`|View information about a registry key|
+|`Get-MpComputerStatus`|Check which `Defender` protection settings are enabled|
+|`sconfig`|Load Server Configuration menu in Windows Server Core|
+
+## Creating a Network Share {#windows}
+
+Basicly you go to `properties` of folder on the system, you go to `sharing`, next `advanced sharing`, you enable sharing the folder by clicking `Share this folder`.
+You can add permissions for accessing the folder for the user by clicking `Permissions`.
+
+## Connecting to Network Share {#windows}
+
+List available shares:
+
+```bash
+Zabsooon@htb[/htb]$ smbclient -L SERVER_IP -U htb-student
+Enter WORKGROUP\htb-student's password: 
+
+    Sharename       Type      Comment
+    ---------       ----      -------
+    ADMIN$          Disk      Remote Admin
+    C$              Disk      Default share
+    Company Data    Disk      
+    IPC$            IPC       Remote IPC
+```
+
+Connecting to company data share:
+
+```bash
+Zabsooon@htb[/htb]$ smbclient '\\SERVER_IP\Company Data' -U htb-student
+Password for [WORKGROUP\htb-student]:
+Try "help" to get a list of possible commands.
+
+smb: \>
+```
+
+## Windows Execution Policy
+
+|**Policy**|**Description**|
+|---|---|
+|`AllSigned`|All scripts can run, but a trusted publisher must sign scripts and configuration files. This includes both remote and local scripts. We receive a prompt before running scripts signed by publishers that we have not yet listed as either trusted or untrusted.|
+|`Bypass`|No scripts or configuration files are blocked, and the user receives no warnings or prompts.|
+|`Default`|This sets the default execution policy, `Restricted` for Windows desktop machines and `RemoteSigned` for Windows servers.|
+|`RemoteSigned`|Scripts can run but requires a digital signature on scripts that are downloaded from the internet. Digital signatures are not required for scripts that are written locally.|
+|`Restricted`|This allows individual commands but does not allow scripts to be run. All script file types, including configuration files (`.ps1xml`), module script files (`.psm1`), and PowerShell profiles (`.ps1`) are blocked.|
+|`Undefined`|No execution policy is set for the current scope. If the execution policy for ALL scopes is set to undefined, then the default execution policy of `Restricted` will be used.|
+|`Unrestricted`|This is the default execution policy for non-Windows computers, and it cannot be changed. This policy allows for unsigned scripts to be run but warns the user before running scripts that are not from the local intranet zone.|
+
+## Windows Fundamentals - Skills Assessment
+
+TBD :)
+
+---
 
 ## Exercises
 
