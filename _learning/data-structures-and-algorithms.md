@@ -18,3 +18,29 @@ be provided here with all of the visualizations also made by me.
 - [ ] [`easy` Two Sum](https://leetcode.com/problems/two-sum/description/)
 - [ ] [`medium` Two Sum II](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/)
 - [ ] [`easy` Is Subsequence](https://leetcode.com/problems/is-subsequence/description/)
+- [ ] [`medium` Subarray Product Less Than K](https://leetcode.com/problems/subarray-product-less-than-k/)
+
+# Problems solutions:
+
+## Two Pointers
+
+### `Reverse string`:
+
+```cpp
+class Solution {
+public:
+    void reverseString(vector<char>& s) {
+        
+        int i = 0;
+        int j = s.size() - 1;
+        
+        while(i < j) {
+            s[i] = s[i] ^ s[j];
+            s[j] = s[i] ^ s[j];
+            s[i] = s[i] ^ s[j];
+            i++;
+            j--;
+        }
+    }
+};
+```

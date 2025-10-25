@@ -9,6 +9,13 @@ Cherno C++ series: `52/111`
 
 # Resources
 
+[C++ Best Practices Book](https://annas-archive.org/md5/f382be00598c02063e6ecd1d2b215ca7)
+[C++ Concurrency in Action]()
+[C++ Design Patters]()
+[TCP/IP Illustrated volume 1]()
+
+[Valueable chapters in books, by Coding Jesus](https://docs.google.com/spreadsheets/d/1EKx2EDRyNxdVoRrUljeKKdG0G-XeJiR9xMb4Xa-ernk/edit?gid=0#gid=0)x
+
 # Useful Stuff
 
 > Getting an offset using `->` operator.
