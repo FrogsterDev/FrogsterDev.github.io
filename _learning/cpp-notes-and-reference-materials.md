@@ -5,7 +5,7 @@ status: "In Progress"
 description: "Here I put all my notes and reflections on the language, cool resources on C++ and beyond."
 ---
 
-Cherno C++ series: `52/111`
+Cherno C++ series: `72/111`
 
 # Resources
 
@@ -14,7 +14,7 @@ Cherno C++ series: `52/111`
 [C++ Design Patters]()
 [TCP/IP Illustrated volume 1]()
 
-[Valueable chapters in books, by Coding Jesus](https://docs.google.com/spreadsheets/d/1EKx2EDRyNxdVoRrUljeKKdG0G-XeJiR9xMb4Xa-ernk/edit?gid=0#gid=0)x
+[Valueable chapters in books, by Coding Jesus](https://docs.google.com/spreadsheets/d/1EKx2EDRyNxdVoRrUljeKKdG0G-XeJiR9xMb4Xa-ernk/edit?gid=0#gid=0)
 
 # Useful Stuff
 
