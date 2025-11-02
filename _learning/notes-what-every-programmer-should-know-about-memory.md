@@ -182,3 +182,74 @@ I ❌ → fetch line → invalidate other caches → M 🖊️
 - Memory is updated only when M 🖊️ is replaced or written back
 
 ✅ This is exactly how MESI prevents stale reads/writes in multi-core CPUs.
+
+
+# 💾 Virtual Memory, Physical Memory & TLB
+
+1️⃣ *Physical Memory (RAM)* 🧱
+
+- Real hardware memory (RAM) used by the CPU.
+- Each address here is a physical address.
+- Accessing it directly would cause:
+    - Fragmentation
+    - Security issues
+    - Process interference
+- That’s why CPUs use virtual memory on top of it.
+
+2️⃣ *Virtual Memory (VMEM)* 🧠
+
+- Provides each process with its own address space (isolated).
+- Virtual addresses are mapped to physical addresses by the MMU (Memory Management Unit).
+- Enables:
+    - Isolation 🛡️: one process can’t access another’s memory.
+    - Paging 📄: divide memory into small equal-sized blocks.
+    - Swapping 🔄: move inactive pages to disk when RAM is full.
+
+3️⃣ *The MMU (Memory Management Unit)* ⚙️
+
+- Hardware that performs address translation: `Virtual Address` → `Physical Address`.
+- Uses the page table to find which frame corresponds to which page.
+- This translation happens for every memory access, so speed matters ⚡.
+
+4️⃣ *The TLB (Translation Lookaside Buffer)* ⚡
+
+TLB = tiny cache inside the CPU for address translations.
+
+| Concept      | Description                                         | Emoji |
+| ------------ | --------------------------------------------------- | ----- |
+| **TLB**      | Stores recently used **page → frame mappings**      | ⚡     |
+| **TLB Hit**  | The mapping is found in the TLB → fast access 🚀    | ✅     |
+| **TLB Miss** | Mapping not in TLB → must read page table (slow) 🐢 | ❌     |
+
+TLB Process Overview
+>```
+CPU → Virtual Address 🧠
+       |
+       v
+Check TLB ⚡
+   |     \
+ Hit ✅   Miss ❌
+   |        |
+Use frame   → Consult Page Table 🧾
+             → Update TLB ⚡
+             → Access memory 🧱
+```
+
+**TLB + Virtual Memory = Fast & Safe Memory Access**
+| Step | Component                   | Action |
+| ---- | --------------------------- | ------ |
+| 1    | CPU issues virtual address  | 🧠     |
+| 2    | TLB translates (if hit)     | ⚡      |
+| 3    | If miss → Page table lookup | 🧾     |
+| 4    | MMU uses physical address   | 🧱     |
+| 5    | Cache/memory access happens | 🚀     |
+
+5️⃣ *Putting It All Together*
+
+```
+Virtual Memory (per process) 🧠
+       ↓  (translated by)
+      MMU ⚙️  →  uses TLB ⚡ + Page Tables 🧾
+       ↓
+Physical Memory (RAM) 🧱
+```
