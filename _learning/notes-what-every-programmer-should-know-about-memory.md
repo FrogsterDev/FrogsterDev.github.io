@@ -217,9 +217,9 @@ TLB = tiny cache inside the CPU for address translations.
 
 | Concept      | Description                                         | Emoji |
 | ------------ | --------------------------------------------------- | ----- |
-| **TLB**      | Stores recently used **page → frame mappings**      | ⚡     |
-| **TLB Hit**  | The mapping is found in the TLB → fast access 🚀    | ✅     |
-| **TLB Miss** | Mapping not in TLB → must read page table (slow) 🐢 | ❌     |
+| **TLB**      | Stores recently used **page → frame mappings**      | ⚡    |
+| **TLB Hit**  | The mapping is found in the TLB → fast access 🚀    | ✅    |
+| **TLB Miss** | Mapping not in TLB → must read page table (slow) 🐢 | ❌    |
 
 TLB Process Overview
 >```
@@ -239,7 +239,7 @@ Use frame   → Consult Page Table 🧾
 | Step | Component                   | Action |
 | ---- | --------------------------- | ------ |
 | 1    | CPU issues virtual address  | 🧠     |
-| 2    | TLB translates (if hit)     | ⚡      |
+| 2    | TLB translates (if hit)     | ⚡     |
 | 3    | If miss → Page table lookup | 🧾     |
 | 4    | MMU uses physical address   | 🧱     |
 | 5    | Cache/memory access happens | 🚀     |
@@ -253,3 +253,75 @@ Virtual Memory (per process) 🧠
        ↓
 Physical Memory (RAM) 🧱
 ```
+
+---
+
+# 🔢 Matrix multiplication optimization
+
+A straightforward matrix multiplication like:
+```cpp
+for (int i = 0; i < N; i++)
+  for (int j = 0; j < N; j++)
+    for (int k = 0; k < N; k++)
+      res[i][j] += mul1[i][k] * mul2[k][j];
+```
+looks fine, but it performs **very poorly on modern CPUs** when `N` is large.
+
+The issue? **Cache performance.**
+>
+- CPUs fetch memory in cache lines (typically 64 bytes).
+- When mul2[k][j] is accessed, we’re jumping across columns of mul2, meaning we’re skipping large strides in memory.
+- That causes cache misses, because each access likely requires loading a new cache line from main memory.
+- So, most CPU cycles are wasted waiting for memory loads instead of doing multiplications.
+
+⚙️ *What the optimized version does*
+
+```cpp
+#define SM (CLS / sizeof(double))  // CLS = cache line size, so SM = number of doubles per cache line
+
+for (i = 0; i < N; i += SM)
+for (j = 0; j < N; j += SM)
+for (k = 0; k < N; k += SM)
+  for (i2 = 0, rres = &res[i][j],
+              rmul1 = &mul1[i][k];
+       i2 < SM;
+       ++i2, rres += N, rmul1 += N)
+    for (k2 = 0, rmul2 = &mul2[k][j];
+         k2 < SM;
+         ++k2, rmul2 += N)
+      for (j2 = 0; j2 < SM; ++j2)
+        rres[j2] += rmul1[k2] * rmul2[j2];
+```
+
+🧠 *What this actually means*
+
+This algorithm divides the matrix into small sub-blocks (tiles) of size `SM × SM`, where `SM` is chosen so that each block fits in the CPU cache.
+
+Each of these outer loops (`i`, `j`, `k`) processes one block at a time.
+
+Inside those blocks, we do the actual multiplication, but now:
+>
+- We reuse the same small chunks of data (mul1, mul2, and res) multiple times, 
+- while they are still hot in the CPU cache.
+
+🔍 *Why this is faster*
+
+1. Cache locality
+    - When you operate on small `SM×SM` blocks, all the needed values stay in cache.
+    - This avoids repeatedly loading the same data from main memory, drastically reducing cache misses.
+
+2. Spatial locality
+    - Accesses like rres[j2], rmul1[k2], and rmul2[j2] are contiguous or near-contiguous in memory.
+    - The CPU prefetcher can easily predict and fetch data in advance.
+
+3. Temporal locality
+    - Each value in mul1 and mul2 is reused multiple times before being evicted from the cache.
+
+4. Better hardware utilization
+    - Modern CPUs have vector units (SIMD), large caches, and memory prefetchers optimized for sequential access.
+    - The blocked structure aligns with how CPUs like to operate: working on small contiguous data chunks.
+
+5. Reduced TLB (Translation Lookaside Buffer) misses
+    - Working within small memory regions means fewer page lookups, which reduces virtual memory overhead.
+
+---
